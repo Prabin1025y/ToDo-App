@@ -1,13 +1,20 @@
 const AddTaskForm = ({ setinputVal, setTodos, inputVal, todos }) => {
   const handleFormSubmit = e => {
+    let isRepeatedTask = false;
     e.preventDefault();
 
     if (inputVal === "") return;
 
-    if (todos.includes(inputVal)) return alert("Task already exists");
-    console.log( );
+    todos.forEach(todo => {
+      if (todo.content === inputVal) return (isRepeatedTask = true);
+    });
 
-    setTodos([...todos, inputVal]);
+    if (isRepeatedTask) return alert("Task Already Exists");
+
+    // if (todos.includes(inputVal)) return alert("Task already exists");
+    // console.log();
+
+    setTodos([...todos, { id: Date.now(), content: inputVal, checked: false }]);
     setinputVal("");
   };
 

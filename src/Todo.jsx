@@ -15,8 +15,8 @@ const Todo = () => {
 
       <section className="h-auto overflow-auto">
         <ul className="flex flex-col items-center">
-          {todos.map((currTodo, index) => (
-            <TodoList key={index} todos={todos} currTodo={currTodo} setTodos={setTodos} />
+          {todos.map(currTodo => (
+            <TodoList key={currTodo.id} todos={todos} currTodo={currTodo} setTodos={setTodos} />
           ))}
           
         </ul>
