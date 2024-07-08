@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FaCheckCircle, FaTrashAlt } from "react-icons/fa";
 import AddTaskForm from "./components/AddTaskForm";
 import TodoList from "./components/TodoList";
 import DateTime from "./components/DateTime";
 const Todo = () => {
   const [inputVal, setinputVal] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    let rawData = localStorage.getItem("reactTodo");
+    if (!rawData) return [];
+
+    return JSON.parse(rawData);
+  });
 
   return (
     <section className="flex flex-col  items-center h-screen">
@@ -13,12 +17,11 @@ const Todo = () => {
       <DateTime />
       <AddTaskForm setTodos={setTodos} inputVal={inputVal} setinputVal={setinputVal} todos={todos} />
 
-      <section className="h-auto overflow-auto">
+      <section className="h-auto overflow-auto scrollbar  scrollbar-thumb-slate-500">
         <ul className="flex flex-col items-center">
           {todos.map(currTodo => (
             <TodoList key={currTodo.id} todos={todos} currTodo={currTodo} setTodos={setTodos} />
           ))}
-          
         </ul>
       </section>
       <button onClick={() => setTodos([])} className="bg-red-500 mt-6 text-white font-bold rounded-lg px-5 py-2">
